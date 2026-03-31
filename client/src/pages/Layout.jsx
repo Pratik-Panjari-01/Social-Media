@@ -10,7 +10,6 @@ const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const user = useSelector((state)=>state.user.value);
 
-
   return user ? (
     <div className='w-full flex h-screen'>
 

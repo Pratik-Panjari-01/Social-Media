@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@clerk/backend": "^3.2.3",
     "@clerk/express": "^2.0.7",
     "@imagekit/nodejs": "^7.3.0",
     "cors": "^2.8.6",

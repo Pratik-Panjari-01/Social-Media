@@ -1,18 +1,17 @@
+import { getAuth } from "@clerk/express";
+
+export const protect = (req, res, next) => {
+
+  const { userId } = getAuth(req);
 
 
-export const protect = async (req,res,next)=>
-{
-    try
-    {
-        const {userId} = await req.auth;
-        if(!userId)
-        {
-            return res.json({success:false, message:"not authenticated"})
-        }
-        next();
-    }
-    catch(error)
-    {
-        res.json({success:false, message:error.message})
-    }
-}
+  if (!userId) {
+    return res.json({
+      success: false,
+      message: "not authenticated"
+    });
+  }
+
+  req.userId = userId;
+  next();
+};

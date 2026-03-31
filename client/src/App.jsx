@@ -20,19 +20,23 @@ const App = () => {
 
   const dispatch = useDispatch()
 
-  useEffect(()=>
-  {
-    const fetchData = async ()=>
-    {
-      if(user)
-      {
-        const token =await getToken()
-        dispatch(fetchUser(token))
+  useEffect(() => {
+  const fetchData = async () => {
+    if (user) {
+      const token = await getToken();
+
+      // 🔥 ADD THIS CHECK
+      if (!token) {
+        console.log("No token found");
+        return;
       }
+
+      dispatch(fetchUser(token));
     }
-    fetchData()
-    
-  },[user, getToken, dispatch ])
+  };
+
+  fetchData();
+}, [user, getToken, dispatch]);
   return (
     <>
     <Toaster/>

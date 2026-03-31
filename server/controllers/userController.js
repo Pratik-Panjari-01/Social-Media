@@ -2,12 +2,13 @@ import User from "../models/User.js"
 import Connection from "../models/Connection.js"
 import fs from 'fs'
 
+
 // Get User Data using userId
 export const getUserData = async(req,res)=>
 {
     try
     {
-        const {userId} = req.auth()
+        const {userId} = req.auth
         const user = await User.findById(userId)
         if(!user)
         {
@@ -29,7 +30,7 @@ export const updateUserData = async(req,res)=>
 {
     try
     {
-        const {userId} = req.auth();
+        const {userId} = req.auth;
         let {username,bio,location,full_name} = req.body;
         const temUser = await User.findById(userId);
 
@@ -64,7 +65,7 @@ export const updateUserData = async(req,res)=>
             const response = await imagekit.upload(
                 {
                     file:buffer,
-                    fileNmae: profile.originalname,
+                    fileName: profile.originalname,
                 }
             )
             const url = imagekit.url({
@@ -75,7 +76,7 @@ export const updateUserData = async(req,res)=>
                     {width:'512'}
                 ]
             })
-            uploadedData.profile_picture = url;
+            updatedData.profile_picture = url;
         }
 
         if(cover)
@@ -84,7 +85,7 @@ export const updateUserData = async(req,res)=>
             const response = await imagekit.upload(
                 {
                     file:buffer,
-                    fileNmae: profile.originalname,
+                    fileName: profile.originalname,
                 }
             )
             const url = imagekit.url({
@@ -95,7 +96,7 @@ export const updateUserData = async(req,res)=>
                     {width:'1280'}
                 ]
             })
-            uploadedData.cover_photo = url;
+            updatedData.cover_photo = url;
         }
 
         const user = await User.findByIdAndUpdate(userId, updatedData, {new:true});
@@ -113,16 +114,16 @@ export const discoverUsers = async(req,res)=>
 {
     try
     {
-        const {userId} = req.auth()
+        const {userId} = req.auth
         const { input } = req.body;
 
         const allUsers =await User.find(
             {
                 $or:[
-                    {username: new RedExp(input,'i')},
-                    {email: new RedExp(input,'i')},
-                    {full_name: new RedExp(input,'i')},
-                    {location: new RedExp(input,'i')},
+                    {username: new RegExp(input,'i')},
+                    {email: new RegExp(input,'i')},
+                    {full_name: new RegExp(input,'i')},
+                    {location: new RegExp(input,'i')},
                 ]
             }
         )
@@ -141,7 +142,7 @@ export const followUser = async(req,res)=>
 {
     try
     {
-        const {userId} = req.auth()
+        const {userId} = req.auth
         const { id } = req.body;
 
         const user = await User.findById(userId);
@@ -151,7 +152,7 @@ export const followUser = async(req,res)=>
             return res.json({success:false, message:"You are already following this user"})
         }
 
-        user.following().push(id);
+        user.following.push(id);
         await user.save()
 
         const toUser = await User.findById(id);
@@ -171,7 +172,7 @@ export const unfollowUser = async(req,res)=>
 {
     try
     {
-        const {userId} = req.auth()
+        const {userId} = req.auth
         const { id } = req.body;
 
         const user = await User.findById(userId);
@@ -196,11 +197,11 @@ export const sendConnectionRequest = async (req,res) =>
 {
     try{
 
-        const {userId} = req.auth();
+        const {userId} = req.auth;
         const {id} = req.body;
 
         const last24Hours = new Date(Date.now() - 24 * 60 * 60 * 1000);
-        const connectionRequests = await Connection.find({from_user_userId,created_at:{$gt:last24Hours}})
+        const connectionRequests = await Connection.find({from_user_id:userId,created_at:{$gt:last24Hours}})
 
         if(connectionRequests.length >= 20)
         {
@@ -239,8 +240,8 @@ export const getUserConnection = async (req,res) =>
 {
     try{
 
-        const {userId} = req.auth();
-        const user = await User.findById(userId).populate('connection followers following');
+        const {userId} = req.auth;
+        const user = await User.findById(userId).populate('connections followers following');
 
         const connections = user.connections
         const followers = user.followers
@@ -263,7 +264,7 @@ export const acceptConnectionRequest = async (req,res) =>
 {
     try{
 
-        const {userId} = req.auth();
+        const {userId} = req.auth;
         const {id} = req.body;
 
         const connection = await Connection.findOne({from_user_id:id,to_user_id:userId});
@@ -285,7 +286,7 @@ export const acceptConnectionRequest = async (req,res) =>
 
         await connection.save();
 
-        res.json({success:true,message:error.message});
+        res.json({success:true,message:"Connection Accepted"});
            
         
     }

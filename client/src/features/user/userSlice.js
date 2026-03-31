@@ -12,9 +12,9 @@ const initialState = {
         })
         return data.success ? data.user : null
     })
-export const updateUser = createAsyncThunk('user/update', async ({userData,token})=>
+    export const updateUser = createAsyncThunk('user/update', async ({userData,token})=>
     {
-        const {data} =  await api.get('/api/user/data',userData,{
+        const {data} =  await api.put('/api/user/update',userData,{
            headers:{Authorization:`Bearer ${token}`}
         })
        if(data.success)

@@ -33,7 +33,7 @@ export const updateUserData = async(req,res)=>
         let {username,bio,location,full_name} = req.body;
         const temUser = await User.findById(userId);
 
-        !username && (username = temuser.username)
+        !username && (username = temUser.username)
 
 
         if(temUser.username !== username)

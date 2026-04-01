@@ -24,13 +24,6 @@ const App = () => {
   const fetchData = async () => {
     if (user) {
       const token = await getToken();
-
-      // 🔥 ADD THIS CHECK
-      if (!token) {
-        console.log("No token found");
-        return;
-      }
-
       dispatch(fetchUser(token));
     }
   };

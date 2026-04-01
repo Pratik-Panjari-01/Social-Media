@@ -1,12 +1,11 @@
 import ImageKit from 'imagekit';
 
-var ImageKit = require('imagekit');
 
 var imageKit = new ImageKit(
     {
         publicKey : process.env.IMAGEKIT_PUBLIC_KEY,
         privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-        urlEndPoint: process.env.IMAGEKIT_URL_ENDPOINT
+        urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT
     }
 );
 

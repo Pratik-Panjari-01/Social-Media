@@ -6,8 +6,14 @@ import UserProfileInfo from '../components/UserProfileInfo';
 import PostCard from '../components/PostCard';
 import moment from 'moment';
 import ProfileModel from '../components/ProfileModel';
-const Profile = () => {
+import { useAuth } from '@clerk/react';
+import { useSelector } from 'react-redux';
+import api from '../api/axios';
+import {toast} from 'react-hot-toast'
 
+const Profile = () => {
+  const currentUser = useSelector((state)=>state.user.value)
+  const {getToken} = useAuth()
   const {profileId} = useParams();
   const [user,setUser] = useState(null);
   const [posts,setPosts] = useState([]);
@@ -15,21 +21,46 @@ const Profile = () => {
   const [showEdit,setShowEdit] = useState(false);
 
 
-  const fetchUser = async ()=>
+  const fetchUser = async (profileId)=>
   {
-    setUser(dummyUserData);
-    setPosts(dummyPostsData)
+    const token = await getToken()
+    try
+    {
+        const {data} = await api.post(`/api/user/profiles`,{profileId},{
+        headers:{Authorization:`Bearer ${token}`}
+      });
+      if(data.success)
+        {
+        setUser(data.profile);
+        setPosts(data.posts)
+      }
+      else
+      {
+        toast.error(data.message);
+      }
+    }
+    catch(error)
+    {
+      toast.error(error.message);
+    }
   }
 
   useEffect(()=>
   {
-    fetchUser();
-  },[])
+    if(profileId)
+    {
+      fetchUser(profileId);
+    }
+    else
+    {
+      fetchUser(currentUser._id)
+    }
+  },[profileId, currentUser])
 
 
 
   return user ? (
-    <div className='relatve h-full overflow-y-scroll bg-gray-50 p-6'>
+    <div className='relative h-full overflow-y-scroll bg-gray-50 p-6'>
       <div className='max-w-3xl mx-auto'>
         {/* Profile Card */}
         <div className='bg-white rounded-2xl shadow overflow-hidden'>
@@ -47,7 +78,7 @@ const Profile = () => {
           <div className='bg-white rounded-xl shadow p-1 flex max-w-md mx-auto'>
             {["posts","media","likes"].map((tab)=>(
               <button onClick={()=>setActiveTab(tab)} key={tab} className={`flex-1 px-4 py-2 text-sm font-medium
-                rounded-lg transition-olors cursor-pointer ${activeTab === tab ?
+                rounded-lg transition-colors cursor-pointer ${activeTab === tab ?
                   "bg-indigo-600 text-white " : "text-gray-600 hover:text-gray-900"
                 }`}>{tab.charAt(0).toUpperCase() + tab.slice(1)}</button>
             ))}

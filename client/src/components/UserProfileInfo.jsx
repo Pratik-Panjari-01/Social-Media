@@ -38,21 +38,21 @@ const UserProfileInfo = ({user, posts, profileId, setShowEdit}) => {
                 </span>
                 <span className='flex items-center gap-1.5'>
                     <Calendar className='w-4 h-4'/>
-                    Joined <span className='font-medium'>{moment(user.createAt).fromNow()}</span>
+                    Joined <span className='font-medium'>{moment(user.createdAt).fromNow()}</span>
                 </span>
             </div>
 
             <div className='flex items-center gap-6 mt-6 border-t border-gray-200 pt-4'>
                 <div>
-                    <span className='sm:text-xl font-bold ext-gray-900'>{posts.length}</span>
+                    <span className='sm:text-xl font-bold text-gray-900'>{posts.length}</span>
                     <span className='text-xs sm:text-sm text-gray-500 ml-1.5'>Posts</span>
                 </div>
                 <div>
-                    <span className='sm:text-xl font-bold ext-gray-900'>{user.followers.length}</span>
+                    <span className='sm:text-xl font-bold text-gray-900'>{user.followers}</span>
                     <span className='text-xs sm:text-sm text-gray-500 ml-1.5'>Followers</span>
                 </div>
                 <div>
-                    <span className='sm:text-xl font-bold ext-gray-900'>{user.following.length}</span>
+                    <span className='sm:text-xl font-bold text-gray-900'>{user.following}</span>
                     <span className='text-xs sm:text-sm text-gray-500 ml-1.5'>Following</span>
                 </div>
             </div>

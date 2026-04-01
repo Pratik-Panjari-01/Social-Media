@@ -29,7 +29,7 @@ export const updateUser = createAsyncThunk(
   "user/update",
   async ({ userData, token }) => {
     try {
-      const { data } = await api.put(
+      const { data } = await api.post(
         "/api/user/update",
         userData,
         {
@@ -56,30 +56,12 @@ const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      // 🔄 FETCH USER
-      .addCase(fetchUser.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchUser.fulfilled, (state, action) => {
-        state.loading = false;
+    builder.addCase(fetchUser.fulfilled, (state, action) => {
         state.value = action.payload;
+      }).addCase(updateUser.fulfilled, (state,action)=>
+      {
+        state.value=action.payload
       })
-      .addCase(fetchUser.rejected, (state) => {
-        state.loading = false;
-      })
-
-      // 🔄 UPDATE USER
-      .addCase(updateUser.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(updateUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.value = action.payload;
-      })
-      .addCase(updateUser.rejected, (state) => {
-        state.loading = false;
-      });
   },
 });
 

@@ -61,7 +61,7 @@ const StoryViewer = ({viewStory, setViewStory}) => {
             
             case 'text':
                 return (
-                    <div className='w-full h-full flex items-center jsutify-center p-8
+                    <div className='w-full h-full flex items-center justify-center p-8
                     text-white text-2xl text-center'>
                         {viewStory.content}
                     </div>
@@ -73,10 +73,10 @@ const StoryViewer = ({viewStory, setViewStory}) => {
             
         }
     }
-
+    console.log(viewStory.background_color)
   return (
     <div className='fixed inset-0 h-screen bg-black bg-opacity-90 z-[110] flex
-    items-center justify-center' style={{backgroundColor:viewStory.media_type===
+    items-center justify-center' style={{backgroundColor:viewStory.media_type ===
         'text'?viewStory.background_color : '#000000'}}>
       
         {/* Progress Bar */}

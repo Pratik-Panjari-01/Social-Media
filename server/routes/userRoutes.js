@@ -15,7 +15,7 @@ userRouter.post('/unfollow',protect,unfollowUser);
 userRouter.post('/connect',protect,sendConnectionRequest);
 userRouter.post('/accept',protect,acceptConnectionRequest);
 userRouter.get('/connections',protect,getUserConnection);
-userRouter.post('/profiles',getUsersProfiles)
+userRouter.post('/profiles',protect,getUsersProfiles)
 userRouter.get('/recent-messages',protect,getUserRecentMessages)
 
 export default userRouter;

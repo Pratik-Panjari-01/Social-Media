@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { dummyPostsData, dummyUserData } from '../assets/assets';
+
 import Loading from '../components/Loading'
 import UserProfileInfo from '../components/UserProfileInfo';
 import PostCard from '../components/PostCard';
@@ -10,8 +10,10 @@ import { useAuth } from '@clerk/react';
 import { useSelector } from 'react-redux';
 import api from '../api/axios';
 import {toast} from 'react-hot-toast'
+import { useUser } from '@clerk/react';
 
 const Profile = () => {
+
   const currentUser = useSelector((state)=>state.user.value)
   const {getToken} = useAuth()
   const {profileId} = useParams();

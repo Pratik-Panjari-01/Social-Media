@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Pencil } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../features/user/userSlice";
+import { updateUser } from "../features/user/userSlice.js";
 import { useAuth } from "@clerk/react";
 
 const ProfileModel = ({setShowEdit}) => {
@@ -18,28 +18,30 @@ const ProfileModel = ({setShowEdit}) => {
     cover_photo: null,
     full_name: user.full_name,
   });
-
+  
   const handleSaveProfile = async (e) => {
     e.preventDefault();
     try {
       const userData = new FormData()
       const {full_name,username,bio,location,profile_picture,cover_photo} = editForm
-
+      
       userData.append('username',username)
       userData.append('bio',bio)
       userData.append('location',location)
       userData.append('full_name',full_name)
       profile_picture && userData.append('profile',profile_picture)
       cover_photo && userData.append('cover',cover_photo)
-
+      
       const token = await getToken()
       dispatch(updateUser({userData, token}))
-
+      
+      
       setShowEdit(false)
     } catch (error) {
       toast.error(error.message);
     }
   };
+
 
   return (
     <div
@@ -52,7 +54,7 @@ const ProfileModel = ({setShowEdit}) => {
             Edit Profile
           </h1>
 
-          <form onSubmit={e=>toast.promise(handleSaveProfile(e),{loading:'Saving...'})} className="space-y-4">
+          <form onSubmit={(e)=>{(handleSaveProfile(e),{loading:'Saving...'})}} className="space-y-4">
             {/* Profile Picture */}
             <div className="flex flex-col items-start gap-3">
               <label

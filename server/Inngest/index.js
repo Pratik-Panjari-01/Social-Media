@@ -126,7 +126,7 @@ const sendNewConnecttionRequestReminder = inngest.createFunction(
 const deleteStory = inngest.createFunction(
     { 
         id: "story-delete",
-        triggers: [{ event: "app/story/delete" }]
+        triggers: [{ event: "app/story.delete" }]
     },
 
     async({event,step})=>
@@ -161,9 +161,9 @@ const sendNotificationUnseenMessages = inngest.createFunction(
          const subject = `💌 You have ${unseenCount[userId]} unseen messages`;
 
          const body = `
-         <dv style="font-family:Arial, sans-sarif;padding:20px;">
+         <div style="font-family:Arial, sans-serif;padding:20px;">
          <h2>Hi ${user.full_name},</h2>
-         <p>Click <a href="${process.env.FRONTEND_URL}/messages"style:"color:#10b981;">
+         <p>Click <a href="${process.env.FRONTEND_URL}/messages"style="color:#10b981;">
          here</a>to view them</p>
          <br/>
          <p>Thanks,<br/>PingUp -Stay Connected</p>

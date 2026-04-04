@@ -56,6 +56,7 @@ const CreatePost = () => {
       console.log(error.message)
       throw new Error(error.message)
     }
+    setLoading(false)
   }
 
 

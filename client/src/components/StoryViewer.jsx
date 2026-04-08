@@ -73,7 +73,7 @@ const StoryViewer = ({viewStory, setViewStory}) => {
             
         }
     }
-    console.log(viewStory.background_color)
+    
   return (
     <div className='fixed inset-0 h-screen bg-black bg-opacity-90 z-[110] flex
     items-center justify-center' style={{backgroundColor:viewStory.media_type ===

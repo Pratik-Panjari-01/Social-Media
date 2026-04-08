@@ -10,7 +10,7 @@ export const fetchMessages = createAsyncThunk('messages/fetchMessages', async ({
     const {data} = await api.post('/api/message/get',{to_user_id:userId},{
         headers:{Authorization:`Bearer ${token}`}
     })
-    console.log(data)
+   
     return data.success ? data : null
 })
 

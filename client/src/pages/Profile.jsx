@@ -59,7 +59,7 @@ const Profile = () => {
     }
   },[profileId, currentUser])
 
-
+ 
 
   return user ? (
     <div className='relative h-full overflow-y-scroll bg-gray-50 p-6'>
@@ -96,7 +96,7 @@ const Profile = () => {
           <div className='flex flex-wrap mt-6 max-w-6xl'>
             {
               posts.filter((post)=>post.image_urls.length > 0).map((post)=>(
-                <>
+                <React.Fragment key={post._id}>
                 {post.image_urls.map((image,index)=>(
                   <Link target='_blank' to={image} key={index} className='relative group'>
                     <img src={image} key={index} className='w-64 aspect-video object-cover'/>
@@ -105,7 +105,7 @@ const Profile = () => {
                     transition duration-300'>Posted {moment(post.createdAt).fromNow()}</p>
                   </Link>
                 ))}
-                </>
+                </React.Fragment>
               ))
             }
           </div>}

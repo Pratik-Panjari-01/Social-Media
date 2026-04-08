@@ -78,7 +78,7 @@ const syncUserDeletion = inngest.createFunction(
 const sendNewConnecttionRequestReminder = inngest.createFunction(
   { 
         id: "send-new-connection-request-reminder",
-        triggers: [{ event: "app/connection-request" }]
+        triggers: { event: "app/connection-request" }
     },
     async({event, step})=>
     {
@@ -126,7 +126,7 @@ const sendNewConnecttionRequestReminder = inngest.createFunction(
 const deleteStory = inngest.createFunction(
     { 
         id: "story-delete",
-        triggers: [{ event: "app/story.delete" }]
+        triggers: { event: "app/story.delete" }
     },
 
     async({event,step})=>
@@ -134,6 +134,7 @@ const deleteStory = inngest.createFunction(
         const {storyId} = event.data;
         const in24Hours = new Date(Date.now() + 24 * 60 * 60 * 1000)
         await step.sleepUntil('wait-for-24-hours',in24Hours)
+
         await step.run('delete-story',async()=>
         {
             await Story.findByIdAndDelete(storyId)

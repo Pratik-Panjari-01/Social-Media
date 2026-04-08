@@ -68,6 +68,7 @@ export const getFeedPosts = async(req,res) =>
         const userIds = [userId, ...connections, ...following];
         // const userIds = [userId, ...user.connections, ...user.following]
         const posts = await Post.find({user:{$in:userIds}}).populate('user').sort({createdAt:-1});
+       
         res.json({success:true,posts});
 
 

@@ -133,7 +133,7 @@ const deleteStory = inngest.createFunction(
     {
         const {storyId} = event.data;
         const in24Hours = new Date(Date.now() + 24 * 60 * 60 * 1000)
-        await step.sleepUntil("wait-for-test", "30s")
+        await step.sleep("wait-for-test", "30s")
         await step.run('delete-story',async()=>
         {
             await Story.findByIdAndDelete(storyId)

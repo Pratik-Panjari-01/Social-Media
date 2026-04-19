@@ -106,7 +106,7 @@ const sendNewConnecttionRequestReminder = inngest.createFunction(
             return({message:"Reminder sent."})
         })
         const in24Hours = new Date(Date.now() + 24 * 60 * 60 * 1000)
-        await step.sleepUntil("wait-for-24-hours",in24Hours);
+        await step.sleep("wait-for-24-hours",in24Hours);
         await step.run('send-connection-request-reminder', async ()=>{
             const connection = await Connection.findById(connectionId).populate('from_user_id to_user_id');
 
@@ -133,7 +133,7 @@ const deleteStory = inngest.createFunction(
     {
         const {storyId} = event.data;
         const in24Hours = new Date(Date.now() + 24 * 60 * 60 * 1000)
-        await step.sleep("wait-for-test", "30s")
+        await step.sleep("wait-for-24h", in24Hours)
         await step.run('delete-story',async()=>
         {
             await Story.findByIdAndDelete(storyId)

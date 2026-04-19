@@ -38,7 +38,7 @@ export const addUserStory = async(req,res)=>
         // Schedule story deletion after 24 hours
         await inngest.send({
             name: 'app/story.delete',
-            data:{ storyId:story._id }
+            data:{ storyId: story._id }
         })
 
         res.json({success:true})
